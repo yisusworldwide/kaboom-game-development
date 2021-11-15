@@ -12,14 +12,6 @@
     <script src="kaboom.js"></script>
     <script type="module">
         kaboom(); 
-        
-        loadSprite("player", "sprites/player.png"); 
-
-        const player = add([ sprite("player"), 
-            pos(120, 80), 
-            rotate(0), 
-            origin("center"),
-        ]);
 
         loadSprite("bean", "sprites/bean.png");
 
@@ -28,11 +20,6 @@
             origin("center"),
             rotate(0),
         ]);
-
-        player.onUpdate(() => {
-            player.angle += 200 * dt()
-
-        })
 
         bean.onUpdate(() => {
             bean.angle -= 200 * dt()
