@@ -15,19 +15,30 @@
 
         loadSprite("bean", "sprites/bean.png");
 
-        const bean = add([ sprite("bean"), 
+        const bean = add([ 
+            sprite("bean"),
             pos(20, 20),
             scale(0.5),  
             origin("center"),
             rotate(0),
         ]);
 
-        bean.onUpdate(() => {
-            bean.angle -= 200 * dt()
+        const MOVE_SPEED = 200;
 
+        keyDown('right', () => {
+            bean.move(MOVE_SPEED,0);
         })
 
+        keyDown('left', () => {
+            bean.move(-MOVE_SPEED,0);
+        })
+
+        // bean.onUpdate(() => {
+        //     bean.angle -= 200 * dt()
+        // })
+
         loadSprite("ground", "sprites/ground.png")
+        loadSprite("enemy", "sprites/enemy.png");
 
         addLevel([
           "     ",
@@ -42,7 +53,20 @@
                 area(),
                 solid(),
             ],
+            "@" : () => [
+                sprite("enemy"),
+                scale(1.2),
+                body(),
+                area(), 
+                "dangerous"
+            ]
         })
+
+        bean.onCollide("dangerous", (dangerous) => {
+            destroy(bean)
+        })
+
+        
     </script>
 </body>
 
