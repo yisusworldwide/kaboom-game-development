@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="kaboom.js"></script>
+    <script type="module">
+        kaboom(); 
+
+        loadSprite("bean", "sprites/bean.png");
+
+        const bean = add([ 
+            sprite("bean"),
+            pos(20, 60),
+            area(),
+            scale(0.5),  
+            origin("center"),
+            rotate(0),
+        ]);
+
+        const MOVE_SPEED = 200;
+
+        keyDown('right', () => {
+            bean.move(MOVE_SPEED,0);
+        })
+
+        keyDown('left', () => {
+            bean.move(-MOVE_SPEED,0);
+        })
+
+        // bean.onUpdate(() => {
+        //     bean.angle -= 200 * dt()
+        // })
+
+        loadSprite("ground", "sprites/ground.png")
+        loadSprite("enemy", "sprites/enemy.png");
+
+        addLevel([
+          "     ",
+          "  @  ",
+          "     ",
+          "xxxxx",
+        ],{
+            width: 40,
+            height: 40,
+            "x" : () => [
+                sprite("ground"),
+                area(),
+                solid(),
+            ],
+            "@" : () => [
+                sprite("enemy"),
+                scale(1.2),
+                body(),
+                area(), 
+                "dangerous"
+            ]
+        })
+
+        bean.onCollide("dangerous", (dangerous) => {
+            destroy(bean)
+        })
+
+        
+    </script>
+</body>
+
+</html>
